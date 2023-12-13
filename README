@@ -1,18 +1,60 @@
-You can run the program with the below commands:
+# Reverse Shell Rootkit
 
-On the attacks machine you can run:
-    nc -lvnp 9001
+## Overview
+This project contains a reverse shell rootkit, designed for educational purposes, to demonstrate advanced techniques in Linux process and file manipulation. It establishes a reverse shell on a target ("victim") machine and conceals its processes and network connections from common monitoring tools.
 
-and on the victim machine you run:
-    python3 rvshell_rootkit.py
-or
-    python rvshell_rootkit_v2.py
+## Getting Started
 
-This program is an easter code that you can embed in a bigger program that when exectured gives you a reversell in the victims machine, and then proceeds to hide the procceses and connection from ps aux and netstat -tunap, by finding the pids of the procceses that run for the attack and also by manupulating the /proc/net/tcp file by exluting the connection and redirecting the fopen64 to our crafted tcp file. 
+### Prerequisites
+- Ensure Python is installed on the target machine. The script is compatible with both Python 2 (`python`) and Python 3 (`python3`).
+- Verify the IP address of the attacker's machine is correctly configured in the script.
+- Familiarize yourself with how your system displays processes with `ps aux` to make any necessary adjustments to the script.
 
-Before running the program make sure the IP of the attacker machine is your desired ip and you can check yousing ps aux how your system desplays the processes, if they are not like the code you can make the right ajustments
-Also I have 2 versions one is running with python and the other with python3 make sure you select the right one for your example.
+### Setup
+1. **Attacker's Machine:**
+   - Run the Netcat listener:
+     ```
+     nc -lvnp 9001
+     ```
+   - This sets up a listening port to receive the reverse shell connection.
 
-Disclaimer:
+2. **Victim's Machine:**
+   - Execute the rootkit script:
+     ```
+     python3 rvshell_rootkit.py
+     ```
+     or
+     ```
+     python rvshell_rootkit_v2.py
+     ```
+   - This initiates the reverse shell and hides its presence.
 
-This program is intended for educational purposes only. It manipulates system-level processes and files, which can have significant implications. Users should operate it in a controlled environment and understand the risks involved.
+### Functionality
+The rootkit:
+- Opens a reverse shell to the attacker's machine.
+- Hides relevant processes from `ps aux`.
+- Conceals connections from `netstat -tunap` by manipulating `/proc/net/tcp` and redirecting `fopen64` to a crafted TCP file.
+
+### Additional Scripts
+- **Appending Libraries to System Files:**
+  Use `attacks_ver1.py` to append created libraries to `/etc/bash.bashrc`. This hides processes system-wide:
+    ```
+     python3 attacks_ver1.py append
+     ```
+     or
+     ```
+     python attacks_ver1.py append
+     ```
+
+- **Cleanup:**
+To revert changes, clean up the environment, and remove traces from system files:
+    ```
+     python3 attacks_ver1.py clean
+     ```
+     or
+     ```
+     python attacks_ver1.py clean
+     ```
+
+## Disclaimer
+This program is intended **strictly for educational purposes**. It demonstrates techniques that manipulate system-level processes and files, which can have significant security and operational implications. Users are advised to operate it in a controlled environment and fully understand the risks involved. Improper use of this tool can lead to system instability or security vulnerabilities.
